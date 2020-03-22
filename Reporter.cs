@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
@@ -14,8 +13,7 @@ namespace ReportingLibrary
         private static readonly Logger MyLogger = LogManager.GetCurrentClassLogger();
 
         public static string LatestResultsReportFolder { get; private set; }
-        private static string ApplicationDebuggingFolder
-            => ConfigurationManager.AppSettings["ApplicationDebuggingFolder"];
+        private static string ApplicationDebuggingFolder => "c://Reports";
         private static ExtentReports ReportManager { get; set; }
         private static string HtmlReportFullPath { get; set; }
         private static TestContext MyTestContext { get; set; }
@@ -54,7 +52,10 @@ namespace ReportingLibrary
             {
                 LogInfoMessage(Status.Pass, successMessage);
             }
-            LogInfoMessage(Status.Fail, failMessage);
+            else
+            {
+                LogInfoMessage(Status.Fail, failMessage);
+            }
         }
 
         private static void LogInfoMessage(Status status, string message)
