@@ -33,7 +33,7 @@ namespace ReportingLibrary
         private static void CreateReportDirectory()
         {
             var filePath = Path.GetFullPath(ApplicationDebuggingFolder);
-            LatestResultsReportFolder = Path.Combine(filePath, DateTime.Now.ToString("MMdd_HHmm"));
+            LatestResultsReportFolder = Path.Combine(filePath, MyTestContext.Test.Properties.Get("Category") + "_" + DateTime.Now.ToString("ddMMyy_HHmm"));
             Directory.CreateDirectory(LatestResultsReportFolder);
 
             HtmlReportFullPath = $"{LatestResultsReportFolder}\\TestResults.html";
@@ -48,14 +48,22 @@ namespace ReportingLibrary
 
         public static void LogTestStep(bool isTestStepPassed, string successMessage, string failMessage)
         {
-            if (isTestStepPassed)
+            try
             {
-                LogInfoMessage(Status.Pass, successMessage);
+                if (isTestStepPassed)
+                {
+                    LogInfoMessage(Status.Pass, successMessage);
+                }
+                else
+                {
+                    LogInfoMessage(Status.Fail, failMessage);
+                }
             }
-            else
+            catch (Exception exception)
             {
-                LogInfoMessage(Status.Fail, failMessage);
+                MyLogger.Info(exception);
             }
+
         }
 
         private static void LogInfoMessage(Status status, string message)

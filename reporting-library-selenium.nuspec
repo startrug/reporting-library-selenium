@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>ReportingLibrary.Selenium</id>
-    <version>1.0.3</version>
+    <version>1.0.5</version>
     <title>ReportingLibrary.Selenium</title>
     <authors>AS</authors>
     <owners>AS</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <description>Simple reporting tool for Selenium Webdriver frameworks</description>
-    <releaseNotes>Deleted App.config file</releaseNotes>
+    <releaseNotes>Change reporting target directory names</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>Reporting Logs Selenium Automation Testing</tags>
   </metadata>
