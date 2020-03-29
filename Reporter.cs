@@ -12,13 +12,6 @@ namespace ReportingLibrary
     {
         private static readonly Logger MyLogger = LogManager.GetCurrentClassLogger();
 
-        public static string LatestResultsReportFolder { get; private set; }
-        private static string ApplicationDebuggingFolder => "c://Reports";
-        private static ExtentReports ReportManager { get; set; }
-        private static string HtmlReportFullPath { get; set; }
-        private static TestContext MyTestContext { get; set; }
-        public static ExtentTest CurrentTestCase { get; set; }
-
         public static void StartReporter()
         {
             MyLogger.Trace("Starting a one time setup for the entire" +
@@ -33,7 +26,8 @@ namespace ReportingLibrary
         private static void CreateReportDirectory()
         {
             var filePath = Path.GetFullPath(ApplicationDebuggingFolder);
-            LatestResultsReportFolder = Path.Combine(filePath, MyTestContext.Test.Properties.Get("Category") + "_" + DateTime.Now.ToString("ddMMyy_HHmm"));
+            CurrentTestCategory = TestContext.CurrentContext.Test.Properties.Get("Category").ToString();
+            LatestResultsReportFolder = Path.Combine(filePath, $"{CurrentTestCategory}_{DateTime.Now:ddMMyy_HHmm}");
             Directory.CreateDirectory(LatestResultsReportFolder);
 
             HtmlReportFullPath = $"{LatestResultsReportFolder}\\TestResults.html";
@@ -102,5 +96,13 @@ namespace ReportingLibrary
             }
             ReportManager.Flush();
         }
+
+        public static string LatestResultsReportFolder { get; private set; }
+        private static string ApplicationDebuggingFolder => "c://Reports";
+        private static ExtentReports ReportManager { get; set; }
+        private static string HtmlReportFullPath { get; set; }
+        private static TestContext MyTestContext { get; set; }
+        public static ExtentTest CurrentTestCase { get; set; }
+        public static string CurrentTestCategory { get; set; }
     }
 }
